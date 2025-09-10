@@ -143,6 +143,13 @@ section {
 .card a:hover { text-decoration: underline; }
 
 /* Contact and footer */
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.icon-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); text-decoration: none; box-shadow: var(--shadow); transition: transform 120ms ease, box-shadow 120ms ease; }
+.icon-btn:hover { transform: translateY(-1px); }
+.icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.icon-btn span { line-height: 1; }
+
+/* legacy list styles retained for compatibility (unused) */
 .contact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .contact-list a { color: var(--accent); text-decoration: none; }
 .contact-list a:hover { text-decoration: underline; }
