@@ -167,7 +167,7 @@ section {
 
 /* Brand hover states */
 .icon-btn[data-brand="linkedin"]:hover { color: #0a66c2; border-color: color-mix(in oklab, #0a66c2 40%, var(--border)); background: color-mix(in oklab, #0a66c2 14%, var(--surface)); }
-.icon-btn[data-brand="github"]:hover { color: #24292f; border-color: color-mix(in oklab, #24292f 35%, var(--border)); background: color-mix(in oklab, #24292f 10%, var(--surface)); }
+.icon-btn[data-brand="github"]:hover { color: #f0f6fc; border-color: #30363d; background: #24292f; }
 .icon-btn[data-brand="instagram"]:hover { color: #e1306c; border-color: color-mix(in oklab, #e1306c 40%, var(--border)); background: color-mix(in oklab, #e1306c 14%, var(--surface)); }
 .icon-btn[data-brand="email"]:hover { color: #ea4335; border-color: color-mix(in oklab, #ea4335 40%, var(--border)); background: color-mix(in oklab, #ea4335 14%, var(--surface)); }
 .icon-btn[data-brand="phone"]:hover { color: #16a34a; border-color: color-mix(in oklab, #16a34a 40%, var(--border)); background: color-mix(in oklab, #16a34a 14%, var(--surface)); }
