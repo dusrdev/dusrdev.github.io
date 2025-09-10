@@ -73,6 +73,7 @@ body {
 .theme-toggle:hover { color: var(--text); background: color-mix(in oklab, var(--surface) 80%, transparent); }
 .theme-toggle svg { width: 18px; height: 18px; }
 .theme-label { font-size: 0.92rem; }
+.theme-toggle span { transition: opacity 160ms ease, transform 160ms ease; }
 
 /* Hero */
 .hero {

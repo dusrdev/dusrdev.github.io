@@ -41,40 +41,54 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a4.5 4.5 0 0 1 0 9a4.5 4.5 0 0 0 0 9"/><circle cx="12" cy="7.5" r="1"/><circle cx="12" cy="16.5" r="1"/></svg>';
   }
 
-  function updateIcon(){
+  function orderFromAuto(){
+    // If system is dark, cycle Auto -> Light -> Dark -> Auto
+    // If system is light, cycle Auto -> Dark -> Light -> Auto
+    return mql.matches ? ['auto','light','dark'] : ['auto','dark','light'];
+  }
+  function nextMode(mode){
+    const order = orderFromAuto();
+    const idx = order.indexOf(mode);
+    return order[(idx + 1) % order.length];
+  }
+
+  function updateIcon(animate=false){
     const mode = currentMode();
     const eff = effectiveTheme();
-    let svg = svgAuto();
-    let label = 'Auto';
-    if (mode === 'dark') { svg = svgMoon(); label = 'Dark'; }
-    else if (mode === 'light') { svg = svgSun(); label = 'Light'; }
-    icon.innerHTML = svg;
-    const lbl = document.getElementById('theme-toggle-label');
-    if (lbl) lbl.textContent = label;
 
-    let next;
-    if (mode === 'auto') next = (eff === 'dark' ? 'light' : 'dark');
-    else if (mode === 'dark') next = 'light';
-    else next = 'auto';
+    const doSwap = () => {
+      let svg = svgAuto();
+      let label = 'Auto';
+      if (mode === 'dark') { svg = svgMoon(); label = 'Dark'; }
+      else if (mode === 'light') { svg = svgSun(); label = 'Light'; }
+      icon.innerHTML = svg;
+      const lbl = document.getElementById('theme-toggle-label');
+      if (lbl) lbl.textContent = label;
 
-    const nextLabel = next === 'auto' ? 'auto (system)' : next;
-    const status = mode === 'auto' ? `Auto (system: ${eff})` : (mode.charAt(0).toUpperCase()+mode.slice(1));
-    btn.setAttribute('aria-label', `Theme: ${status}. Click to switch to ${nextLabel}`);
-    btn.title = btn.getAttribute('aria-label');
+      const next = nextMode(mode);
+      const nextLabel = next === 'auto' ? 'auto (system)' : next;
+      const status = mode === 'auto' ? `Auto (system: ${eff})` : (mode.charAt(0).toUpperCase()+mode.slice(1));
+      btn.setAttribute('aria-label', `Theme: ${status}. Click to switch to ${nextLabel}`);
+      btn.title = btn.getAttribute('aria-label');
+    };
+
+    if (animate) {
+      [icon, document.getElementById('theme-toggle-label')].forEach(el => { if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(-2px)'; } });
+      setTimeout(() => {
+        doSwap();
+        [icon, document.getElementById('theme-toggle-label')].forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'none'; } });
+      }, 140);
+    } else {
+      doSwap();
+    }
   }
 
   btn.addEventListener('click', () => {
     const mode = currentMode();
-    let next;
-    if (mode === 'auto') {
-      next = (effectiveTheme() === 'dark' ? 'light' : 'dark');
-    } else if (mode === 'dark') {
-      next = 'light';
-    } else {
-      next = 'auto';
-    }
+    const next = nextMode(mode);
     setStored(next);
     apply(next);
+    updateIcon(true);
   });
 
   // Respond to system changes when in auto
