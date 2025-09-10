@@ -37,18 +37,26 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
   }
   function svgAuto(){
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v18"/><circle cx="8" cy="12" r="3"/><path d="M16 7a5 5 0 1 0 0 10"/></svg>';
+    // Yin-yang style: circle, S-curve, and two small dots
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a4.5 4.5 0 0 1 0 9a4.5 4.5 0 0 0 0 9"/><circle cx="12" cy="7.5" r="1"/><circle cx="12" cy="16.5" r="1"/></svg>';
   }
 
   function updateIcon(){
     const mode = currentMode();
     const eff = effectiveTheme();
     let svg = svgAuto();
-    if (mode === 'dark') svg = svgMoon();
-    else if (mode === 'light') svg = svgSun();
+    let label = 'Auto';
+    if (mode === 'dark') { svg = svgMoon(); label = 'Dark'; }
+    else if (mode === 'light') { svg = svgSun(); label = 'Light'; }
     icon.innerHTML = svg;
+    const lbl = document.getElementById('theme-toggle-label');
+    if (lbl) lbl.textContent = label;
 
-    const next = MODES[(MODES.indexOf(mode)+1)%MODES.length];
+    let next;
+    if (mode === 'auto') next = (eff === 'dark' ? 'light' : 'dark');
+    else if (mode === 'dark') next = 'light';
+    else next = 'auto';
+
     const nextLabel = next === 'auto' ? 'auto (system)' : next;
     const status = mode === 'auto' ? `Auto (system: ${eff})` : (mode.charAt(0).toUpperCase()+mode.slice(1));
     btn.setAttribute('aria-label', `Theme: ${status}. Click to switch to ${nextLabel}`);
@@ -57,7 +65,14 @@
 
   btn.addEventListener('click', () => {
     const mode = currentMode();
-    const next = MODES[(MODES.indexOf(mode)+1)%MODES.length];
+    let next;
+    if (mode === 'auto') {
+      next = (effectiveTheme() === 'dark' ? 'light' : 'dark');
+    } else if (mode === 'dark') {
+      next = 'light';
+    } else {
+      next = 'auto';
+    }
     setStored(next);
     apply(next);
   });

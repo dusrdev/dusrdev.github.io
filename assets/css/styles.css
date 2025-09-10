@@ -69,8 +69,10 @@ body {
 .nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: color-mix(in oklab, var(--accent) 70%, transparent); transform: scaleX(0); transform-origin: left; transition: transform 160ms ease; }
 .nav a:hover { color: var(--text); }
 .nav a:hover::after { transform: scaleX(1); }
-.theme-toggle { margin-left: 12px; height: 32px; width: 32px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.theme-toggle { margin-left: 12px; height: 36px; padding: 0 10px; min-width: 40px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 .theme-toggle:hover { color: var(--text); background: color-mix(in oklab, var(--surface) 80%, transparent); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-label { font-size: 0.92rem; }
 
 /* Hero */
 .hero {
