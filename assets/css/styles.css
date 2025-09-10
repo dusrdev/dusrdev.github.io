@@ -42,6 +42,7 @@ body {
 .site-header {
   position: sticky;
   top: 0;
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
   backdrop-filter: saturate(180%) blur(12px);
   background: color-mix(in oklab, var(--bg) 80%, transparent);
   border-bottom: 1px solid var(--border);
@@ -68,7 +69,7 @@ body {
 
 /* Hero */
 .hero {
-  padding: 72px 0 28px;
+  padding: 36px 0 28px;
 }
 .hero-inner { display: grid; grid-template-columns: 180px 1fr; gap: 28px; align-items: center; }
 .hero .subtitle {
@@ -100,7 +101,9 @@ body {
 }
 
 /* Sections */
-section { padding: 36px 0; scroll-margin-top: 80px; }
+section {
+  scroll-margin-top: 80px;
+}
 .section-header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .muted { color: var(--muted); }
 .inline-link { color: var(--accent); text-decoration: none; }
