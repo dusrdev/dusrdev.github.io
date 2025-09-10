@@ -4,7 +4,6 @@
   if (!btn || !icon) return;
 
   const mql = window.matchMedia('(prefers-color-scheme: dark)');
-  const MODES = ['dark','light','auto'];
 
   function getStored(){ return localStorage.getItem('theme') || 'auto'; }
   function setStored(v){ localStorage.setItem('theme', v); }
