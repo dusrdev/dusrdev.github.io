@@ -93,3 +93,13 @@ Housekeeping for future updates
   - Any directory conventions (content, layouts, components) specific to your implementation.
   - How to run a single test with the chosen test runner.
 
+Current site features and notes (kept up-to-date)
+- Approach: Pure static site (index.html + /assets)
+- Dynamic GitHub projects: assets/js/app.js fetches selected repos via GitHub API.
+- NuGet total downloads badge: assets/js/nuget-downloads.js fetches from NuGet search API (owner:dusrdev) and sums totalDownloads.
+  - Primary endpoint: https://azuresearch-usnc.nuget.org/query?q=owner:dusrdev&take=100
+  - Fallbacks: api-v2v3search endpoints and author:dusrdev query if needed.
+  - Graceful fallback displays "30k+" if the API is unavailable.
+- Local preview: python3 -m http.server 8000, then open http://localhost:8000
+- To change the displayed handle/owner, edit username in assets/js/app.js and owner in assets/js/nuget-downloads.js
+

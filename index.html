@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>David (dusrdev) — Portfolio</title>
-    <meta name="description" content="Personal portfolio and resume website for David (dusrdev)." />
+    <title>David Shnayder — Portfolio</title>
+    <meta name="description" content="Personal portfolio and resume website for David Shnayder (dusrdev)." />
     <link rel="preconnect" href="https://api.github.com" crossorigin>
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💼</text></svg>">
@@ -12,7 +12,7 @@
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="#">dusrdev</a>
+        <a class="brand" href="#">David Shnayder</a>
         <nav class="nav">
           <a href="assets/resume/Resume.pdf" target="_blank" rel="noopener">Resume</a>
           <a href="https://github.com/dusrdev" target="_blank" rel="noopener">GitHub</a>
@@ -25,11 +25,14 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-media">
-            <img src="assets/images/profile.png" alt="Profile photo of David" class="avatar" loading="eager" />
+            <img src="assets/images/profile.png" alt="Profile photo of David Shnayder" class="avatar" loading="eager" />
           </div>
           <div class="hero-text">
-            <h1>Hi, I'm David</h1>
-            <p class="subtitle">Software Engineer • Building reliable, user-centered software</p>
+            <h1>Hi, I'm David Shnayder</h1>
+            <p class="subtitle">Software Developer • Performance, reliability, and AI-assisted development</p>
+            <ul class="stats" aria-label="quick stats">
+              <li class="badge" id="nuget-downloads" aria-live="polite">NuGet downloads: loading…</li>
+            </ul>
             <div class="cta">
               <a class="btn primary" href="assets/resume/Resume.pdf" target="_blank" rel="noopener">View Resume</a>
               <a class="btn" href="https://github.com/dusrdev" target="_blank" rel="noopener">GitHub Profile</a>
@@ -42,8 +45,10 @@
         <div class="container">
           <h2>About</h2>
           <p>
-            I craft pragmatic solutions with clean architecture and thoughtful UX. This site highlights
-            selected projects and experience. For full details, see my resume and GitHub profile.
+            I’m a recent graduate with a BSc in Business and Computer Science, combining technical depth with a strategic mindset. I build performant, reliable systems and increasingly leverage AI-assisted development, prompt engineering, and agentic coding to accelerate problem‑solving and improve developer productivity.
+          </p>
+          <p>
+            I thrive on curiosity and continuous learning—contributing to open source, experimenting with new tools and workflows, and blending traditional engineering rigor with emerging AI capabilities to deliver smarter, more efficient solutions.
           </p>
         </div>
       </section>
@@ -74,7 +79,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>© <span id="year"></span> David (dusrdev). All rights reserved.</p>
+        <p>© <span id="year"></span> David Shnayder (dusrdev). All rights reserved.</p>
       </div>
     </footer>
 
@@ -82,6 +87,7 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
     <script defer src="assets/js/app.js"></script>
+    <script defer src="assets/js/nuget-downloads.js"></script>
   </body>
 </html>
 
