@@ -1,29 +1,67 @@
 (function() {
-  const el = document.getElementById('experience-line');
-  if (!el) return;
+  const card = document.getElementById('experience-card');
+  const content = document.getElementById('exp-content');
+  const line1 = document.getElementById('exp-line1');
+  const line2 = document.getElementById('exp-line2');
+  const dates = document.getElementById('exp-dates');
+  const prevBtn = document.querySelector('.exp-nav.prev');
+  const nextBtn = document.querySelector('.exp-nav.next');
+  if (!card || !line1 || !line2 || !dates) return;
 
-  const items = [
-    'Software Support — Bright Data (Aug 2024–Jan 2025): SDK/proxy support and debugging',
-    'Built cross‑platform CLI for proxy load testing and metrics — Bright Data',
-    'System Administrator — A.D Insurance (May 2022–Oct 2023): automation and secure remote access',
-    'Configured VPN and authentication for remote work — A.D Insurance',
-    'Open‑source: authored multiple performance‑focused libraries and tools',
-    'BSc Business & Computer Science — Open University of Israel'
+  const entries = [
+    {
+      role: 'Software Support', company: 'Bright Data', dates: 'Aug 2024 – Jan 2025',
+      summary: 'SDK/proxy support and debugging; built cross‑platform proxy load‑testing CLI'
+    },
+    {
+      role: 'System Administrator', company: 'A.D Insurance', dates: 'May 2022 – Oct 2023',
+      summary: 'Automation around legacy software; configured VPN/auth for secure remote work'
+    }
   ];
 
   let i = 0;
-  function next() {
-    el.style.opacity = 0;
+  let timer = null;
+
+  function render(index) {
+    const e = entries[index];
+    content.style.opacity = 0;
     setTimeout(() => {
-      el.textContent = items[i];
-      el.style.opacity = 1;
-      i = (i + 1) % items.length;
-    }, 180);
+      line1.textContent = `${e.role} · ${e.company}`;
+      line2.textContent = e.summary;
+      dates.textContent = e.dates;
+      content.style.opacity = 1;
+    }, 160);
   }
 
-  // Initialize and rotate
-  el.textContent = items[0];
-  el.style.opacity = 1;
-  setInterval(next, 4000);
+  function next() {
+    i = (i + 1) % entries.length;
+    render(i);
+  }
+  function prev() {
+    i = (i - 1 + entries.length) % entries.length;
+    render(i);
+  }
+
+  function start() {
+    stop();
+    timer = setInterval(next, 5000);
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+  // Events
+  nextBtn?.addEventListener('click', () => { next(); start(); });
+  prevBtn?.addEventListener('click', () => { prev(); start(); });
+  card.addEventListener('mouseenter', stop);
+  card.addEventListener('mouseleave', start);
+  card.addEventListener('focusin', stop);
+  card.addEventListener('focusout', start);
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { next(); start(); }
+    else if (e.key === 'ArrowLeft') { prev(); start(); }
+  });
+
+  // Init
+  render(i);
+  start();
 })();
 
