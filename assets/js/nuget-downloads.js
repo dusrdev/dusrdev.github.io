@@ -3,13 +3,14 @@
   const el = document.getElementById('nuget-downloads');
   if (!el) return;
 
-  function formatCompact(n) {
+  function formatCompactPlus(n) {
     try {
-      return new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 1 }).format(n);
+      const base = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 1 }).format(n).replace(/\s/g, '');
+      return base + '+';
     } catch {
-      if (n >= 1_000_000) return Math.round(n / 100_000) / 10 + 'M';
-      if (n >= 1_000) return Math.round(n / 100) / 10 + 'K';
-      return String(n);
+      if (n >= 1_000_000) return Math.round(n / 100_000) / 10 + 'M+';
+      if (n >= 1_000) return Math.round(n / 100) / 10 + 'K+';
+      return String(n) + '+';
     }
   }
 
@@ -37,18 +38,18 @@
   }
 
   (async () => {
-    el.textContent = 'NuGet downloads: loading…';
+    el.textContent = 'NuGet · loading…';
     const total = await getTotal();
     if (typeof total === 'number' && total > 0) {
-      const compact = formatCompact(total);
-      el.textContent = `NuGet downloads: ${total.toLocaleString()} (${compact}+)`;
+      const compact = formatCompactPlus(total);
+      el.textContent = `NuGet · ${compact}`;
       el.title = `${total.toLocaleString()} total downloads across all packages`;
       el.setAttribute('aria-label', `${total.toLocaleString()} total NuGet downloads`);
     } else {
-      // Graceful fallback
-      el.textContent = 'NuGet downloads: 30k+';
+      // Graceful fallback (keep subtle)
+      el.textContent = 'NuGet · 30K+';
       el.title = 'Approximate total downloads';
-      el.setAttribute('aria-label', 'Approximate total NuGet downloads: 30k+');
+      el.setAttribute('aria-label', 'Approximate total NuGet downloads: 30K+');
     }
   })();
 })();

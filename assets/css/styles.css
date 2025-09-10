@@ -153,6 +153,6 @@ section { padding: 36px 0; scroll-margin-top: 80px; }
 .hidden { display: none; }
 
 /* Stats */
-.stats { margin-top: 10px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; padding: 0; list-style: none; }
-.stats .badge { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; box-shadow: var(--shadow); }
+.stats { margin-top: 10px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; padding: 0; list-style: none; font-size: 0.95rem; }
+.stats .badge { background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: 4px 8px; box-shadow: none; color: var(--muted); }
 
