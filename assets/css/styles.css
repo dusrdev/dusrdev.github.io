@@ -109,6 +109,10 @@ section {
 .inline-link { color: var(--accent); text-decoration: none; }
 .inline-link:hover { text-decoration: underline; }
 
+/* Experience strip */
+.experience-strip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--border); background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); color: var(--muted); }
+#experience-line { transition: opacity 200ms ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
 /* Projects grid */
 .grid {
   display: grid;
