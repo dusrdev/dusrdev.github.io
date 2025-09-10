@@ -1,6 +1,6 @@
 (function() {
   const owner = 'dusrdev';
-  const el = document.getElementById('nuget-downloads');
+  const el = document.getElementById('nuget-button');
   if (!el) return;
 
   function formatCompactPlus(n) {
