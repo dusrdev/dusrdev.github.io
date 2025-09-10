@@ -64,8 +64,11 @@ body {
   color: var(--muted);
   text-decoration: none;
   margin-left: 18px;
+  position: relative;
 }
+.nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: color-mix(in oklab, var(--accent) 70%, transparent); transform: scaleX(0); transform-origin: left; transition: transform 160ms ease; }
 .nav a:hover { color: var(--text); }
+.nav a:hover::after { transform: scaleX(1); }
 
 /* Hero */
 .hero {
@@ -138,7 +141,9 @@ section {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
+.card:hover { transform: translateY(-2px); border-color: color-mix(in oklab, var(--accent) 40%, var(--border)); box-shadow: 0 6px 24px rgba(0,0,0,0.12), var(--shadow); }
 @media (max-width: 720px) {
   .card { grid-column: span 6; }
 }
@@ -156,8 +161,16 @@ section {
 .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .icon-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); text-decoration: none; box-shadow: var(--shadow); transition: transform 120ms ease, box-shadow 120ms ease; }
 .icon-btn:hover { transform: translateY(-1px); }
+.icon-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent), var(--shadow); }
 .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 .icon-btn span { line-height: 1; }
+
+/* Brand hover states */
+.icon-btn[data-brand="linkedin"]:hover { color: #0a66c2; border-color: color-mix(in oklab, #0a66c2 40%, var(--border)); background: color-mix(in oklab, #0a66c2 14%, var(--surface)); }
+.icon-btn[data-brand="github"]:hover { color: #24292f; border-color: color-mix(in oklab, #24292f 35%, var(--border)); background: color-mix(in oklab, #24292f 10%, var(--surface)); }
+.icon-btn[data-brand="instagram"]:hover { color: #e1306c; border-color: color-mix(in oklab, #e1306c 40%, var(--border)); background: color-mix(in oklab, #e1306c 14%, var(--surface)); }
+.icon-btn[data-brand="email"]:hover { color: #ea4335; border-color: color-mix(in oklab, #ea4335 40%, var(--border)); background: color-mix(in oklab, #ea4335 14%, var(--surface)); }
+.icon-btn[data-brand="phone"]:hover { color: #16a34a; border-color: color-mix(in oklab, #16a34a 40%, var(--border)); background: color-mix(in oklab, #16a34a 14%, var(--surface)); }
 
 /* legacy list styles retained for compatibility (unused) */
 .contact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
@@ -171,6 +184,10 @@ section {
 
 /* Utilities */
 .hidden { display: none; }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(8px); transition: opacity 420ms ease, transform 420ms ease; }
+.reveal.visible { opacity: 1; transform: none; }
 
 /* Stats */
 .stats { margin-top: 10px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; padding: 0; list-style: none; font-size: 0.95rem; }
