@@ -10,11 +10,11 @@
 
   const entries = [
     {
-      role: 'Software Support', company: 'Bright Data', dates: 'Aug 2024 – Jan 2025',
-      summary: 'SDK/proxy support and debugging; built cross‑platform proxy load‑testing CLI'
+      role: 'Software Support', company: 'Bright Data', dates: 'Aug 2024 - Jan 2025',
+      summary: 'SDK/proxy support and debugging; built cross-platform proxy load-testing CLI'
     },
     {
-      role: 'System Administrator', company: 'A.D Insurance', dates: 'May 2022 – Oct 2023',
+      role: 'System Administrator', company: 'A.D Insurance', dates: 'May 2022 - Oct 2023',
       summary: 'Automation around legacy software; configured VPN/auth for secure remote work'
     }
   ];

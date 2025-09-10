@@ -24,15 +24,6 @@
     catch { return ''; }
   }
 
-  function scoreRepo(r) {
-    // Heuristic score: stargazers + recent activity + has topics + not fork
-    const stars = r.stargazers_count || 0;
-    const fresh = Math.max(0, 60 - Math.min(60, (Date.now() - new Date(r.pushed_at).getTime()) / (1000 * 60 * 60 * 24)));
-    const topics = (r.topics?.length || 0) * 2;
-    const notFork = r.fork ? -10 : 5;
-    return stars * 1.5 + fresh + topics + notFork;
-  }
-
   function renderRepo(r) {
     const meta = [
       `★ ${r.stargazers_count ?? r.stars ?? 0}`,
@@ -49,39 +40,6 @@
       h('a', { href: url, target: '_blank', rel: 'noopener' }, 'View on GitHub')
     );
     return card;
-  }
-
-  async function tryPinnedFromLocalJson() {
-    try {
-      const resp = await fetch('/assets/data/pinned.json', { cache: 'no-store' });
-      if (!resp.ok) return false;
-      const data = await resp.json();
-      const entries = Array.isArray(data) ? data : (data.pinned || []);
-      if (!entries.length) return false;
-      const limited = entries.slice(0, 6);
-      const promises = limited.map(full => {
-        const [owner, repo] = full.split('/');
-        return fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-          headers: { 'Accept': 'application/vnd.github+json' }
-        }).then(r => r.ok ? r.json() : null).catch(() => null);
-      });
-      const results = await Promise.all(promises);
-      const repos = results.filter(Boolean);
-      if (!repos.length) return false;
-      repos.forEach(r => grid.appendChild(renderRepo(r)));
-      return true;
-    } catch { return false; }
-  }
-
-  async function tryPinnedFromPublicService() {
-    try {
-      const resp = await fetch(`https://gh-pinned-repos.egoist.dev/?username=${username}`);
-      if (!resp.ok) return false;
-      const list = await resp.json(); // [{ repo, owner, description, language, stars, link }]
-      if (!Array.isArray(list) || !list.length) return false;
-      list.slice(0, 6).forEach(item => grid.appendChild(renderRepo(item)));
-      return true;
-    } catch { return false; }
   }
 
   async function loadRepos() {
