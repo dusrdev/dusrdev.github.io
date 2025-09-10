@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David (dusrdev) — Portfolio</title>
+    <meta name="description" content="Personal portfolio and resume website for David (dusrdev)." />
+    <link rel="preconnect" href="https://api.github.com" crossorigin>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💼</text></svg>">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">dusrdev</a>
+        <nav class="nav">
+          <a href="assets/resume/Resume.pdf" target="_blank" rel="noopener">Resume</a>
+          <a href="https://github.com/dusrdev" target="_blank" rel="noopener">GitHub</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-text">
+            <h1>Hi, I'm David</h1>
+            <p class="subtitle">Software Engineer • Building reliable, user-centered software</p>
+            <div class="cta">
+              <a class="btn primary" href="assets/resume/Resume.pdf" target="_blank" rel="noopener">View Resume</a>
+              <a class="btn" href="https://github.com/dusrdev" target="_blank" rel="noopener">GitHub Profile</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="about">
+        <div class="container">
+          <h2>About</h2>
+          <p>
+            I craft pragmatic solutions with clean architecture and thoughtful UX. This site highlights
+            selected projects and experience. For full details, see my resume and GitHub profile.
+          </p>
+        </div>
+      </section>
+
+      <section class="projects" id="projects">
+        <div class="container">
+          <div class="section-header">
+            <h2>Projects</h2>
+            <p class="muted">Recently active public repositories</p>
+          </div>
+          <div id="projects-grid" class="grid"></div>
+          <div id="projects-error" class="error hidden" role="alert"></div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="container">
+          <h2>Contact</h2>
+          <p>
+            The easiest way to reach me is via GitHub.
+            <a class="inline-link" href="https://github.com/dusrdev" target="_blank" rel="noopener">@dusrdev</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> David (dusrdev). All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script defer src="assets/js/app.js"></script>
+  </body>
+</html>
+
