@@ -49,7 +49,8 @@
       'ArrowDb',
       'Pulse',
       'PdfTool',
-      'PuppeteerSharpToolkit'
+      'PuppeteerSharpToolkit',
+      'Verifast'
     ];
 
     try {
