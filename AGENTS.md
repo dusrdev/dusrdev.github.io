@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to WARP (warp.dev) and other Agents when working with code in this repository.
+This file provides guidance to any Agents working with code in this repository.
 
 Repository intent and current state
 - Intent: Personal portfolio/resume website hosted with GitHub Pages at dusrdev.github.io
@@ -12,12 +12,12 @@ How to run locally
 
 Deploy
 - Push to default branch. GitHub Pages (Settings → Pages → Source: Deploy from a branch) serves the site.
-- Resume is hosted externally (MEGA S4) at a stable URL; no repo changes are needed when updating the PDF.
+- Resume files live inside `assets/resume/` (drop in `Resume.pdf` and `Resume-He.pdf`). Update those files directly before deploy; no external hosting is involved anymore.
 
 High-level architecture (big picture)
 - index.html: Sections and wiring
-  - Header: brand + nav + 3‑state theme toggle (Dark/Light/Auto with SVG icon & label)
-  - Hero: profile avatar, tagline, buttons (View Resume → MEGA S4 URL, GitHub Profile)
+  - Header: brand + nav + 3‑state theme toggle (Dark/Light/Auto with SVG icon & label) + `Resume` and `Resume-He` links that open the PDFs from `assets/resume/`
+  - Hero: profile avatar, tagline, buttons (View Resume → `assets/resume/Resume.pdf`, GitHub Profile)
   - About: short bio
   - Experience: compact two‑line carousel with prev/next buttons; auto‑rotates and pauses on hover/focus
   - Projects: grid filled from GitHub API in a fixed order
@@ -37,14 +37,14 @@ High-level architecture (big picture)
   - reveal.js: IntersectionObserver to fade/slide sections into view (.reveal)
   - theme.js: 3‑state theme toggle with SVG icons (sun/moon/yin‑yang) and animated swaps; cycles Dark ↔ Light ↔ Auto (order after Auto depends on current system theme)
 - assets/images/profile.png: Hero avatar
+- assets/resume/: Directory that stores `Resume.pdf` (default) and `Resume-He.pdf` (alternate language). Keep a placeholder file (e.g., `.gitkeep`) if the PDFs are not committed.
 
 External links and resources
-- Resume: https://s3.g.s4.mega.io/re6nand6mkj32ebypw2v3cbkjg5ixnvuf7xny/resume/Resume.pdf
 - GitHub profile: https://github.com/dusrdev
 
 Common maintenance tasks
 - Update projects shown: edit the ordered array in assets/js/app.js
-- Update resume: replace the PDF at the MEGA S4 key; site links stay the same
+- Update resume files: drop the latest `Resume.pdf` and/or `Resume-He.pdf` into assets/resume/ (overwrite existing files); links update automatically
 - Adjust theme toggle behavior or labels: assets/js/theme.js
 - Tweak animations (reveal/hover): assets/js/reveal.js and CSS transitions in styles.css
 
