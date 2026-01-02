@@ -24,8 +24,6 @@
   ];
 
   let i = 0;
-  let timer = null;
-
   function render(index) {
     const e = entries[index];
     content.style.opacity = 0;
@@ -46,25 +44,14 @@
     render(i);
   }
 
-  function start() {
-    stop();
-    timer = setInterval(next, 5000);
-  }
-  function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
   // Events
-  nextBtn?.addEventListener('click', () => { next(); start(); });
-  prevBtn?.addEventListener('click', () => { prev(); start(); });
-  card.addEventListener('mouseenter', stop);
-  card.addEventListener('mouseleave', start);
-  card.addEventListener('focusin', stop);
-  card.addEventListener('focusout', start);
+  nextBtn?.addEventListener('click', next);
+  prevBtn?.addEventListener('click', prev);
   card.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { next(); start(); }
-    else if (e.key === 'ArrowLeft') { prev(); start(); }
+    if (e.key === 'ArrowRight') { next(); }
+    else if (e.key === 'ArrowLeft') { prev(); }
   });
 
   // Init
   render(i);
-  start();
 })();
