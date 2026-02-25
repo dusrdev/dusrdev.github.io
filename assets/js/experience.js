@@ -11,7 +11,7 @@
   const entries = [
     {
       role: 'Software Engineer', company: 'Elspec', dates: 'Jan 2026 - Present',
-      summary: 'Build and maintain backend services/APIs and desktop apps in C#/.NET (WPF/MAUI), focusing on scalability and reliability.'
+      summary: 'Shipping resilient C# systems and kiosk tooling for hardware telemetry + binary protocol decoding.'
     },
     {
       role: 'Software Support', company: 'Bright Data', dates: 'Aug 2024 - Jan 2025',
