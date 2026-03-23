@@ -209,7 +209,7 @@
     const title = h('h3', {}, repo.name || config.repo);
     const description = h('p', {}, config.summary);
     const kicker = h('p', { class: 'card-kicker' }, config.kicker);
-    const link = h('a', { href: url, target: '_blank', rel: 'noopener' }, 'View on GitHub');
+    const link = h('a', { class: 'card-link', href: url, target: '_blank', rel: 'noopener' }, 'View on GitHub');
     const facts = renderFacts(repo, downloads);
 
     if (config.featured) {

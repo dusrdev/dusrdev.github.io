@@ -1,6 +1,7 @@
 :root {
   --font-body: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   --font-display: "Cormorant Garamond", Georgia, serif;
+  --pill-inline-pad: 10px;
   --bg: #f4efe7;
   --bg-elevated: rgba(255, 252, 247, 0.74);
   --surface: #f9f4ec;
@@ -479,16 +480,22 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 14px;
+  gap: 10px;
+}
+
+.contribution-card .eyebrow {
+  margin-bottom: 2px;
 }
 
 .contribution-card h3 {
   margin: 0;
   font-size: 2rem;
+  line-height: 0.95;
 }
 
 .contribution-card .text-link {
-  margin-top: auto;
+  margin-top: 6px;
+  margin-left: var(--pill-inline-pad);
 }
 
 .text-link,
@@ -613,7 +620,7 @@ section {
 .card-bottom {
   display: grid;
   align-content: start;
-  gap: 14px;
+  gap: 12px;
 }
 
 .card-side {
@@ -627,10 +634,9 @@ section {
 .project-facts {
   display: grid;
   gap: 12px;
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-strong) 76%, transparent);
+  padding: 0;
+  border: 0;
+  background: none;
 }
 
 .contribution-facts {
@@ -639,6 +645,10 @@ section {
 
 .contribution-facts:empty {
   display: none;
+}
+
+.card-link {
+  margin-left: var(--pill-inline-pad);
 }
 
 .card-kicker {
@@ -673,7 +683,7 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 10px;
+  padding: 7px var(--pill-inline-pad);
   border-radius: 999px;
   background: color-mix(in oklab, var(--surface-strong) 80%, transparent);
   border: 1px solid var(--border);
