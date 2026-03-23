@@ -142,23 +142,40 @@
     );
   }
 
+  function renderDownloadItem(download) {
+    const attrs = {
+      class: 'download-pill',
+      title: download.title,
+      'aria-label': download.ariaLabel
+    };
+
+    if (download.href) {
+      return h(
+        'a',
+        {
+          ...attrs,
+          href: download.href,
+          target: '_blank',
+          rel: 'noopener'
+        },
+        `${download.label} · ${formatCompactPlus(download.value)}`
+      );
+    }
+
+    return h(
+      'span',
+      attrs,
+      `${download.label} · ${formatCompactPlus(download.value)}`
+    );
+  }
+
   function renderDownloads(downloads) {
     if (!downloads.length) return null;
 
     return h(
       'div',
       { class: 'project-downloads' },
-      downloads.map((download) =>
-        h(
-          'span',
-          {
-            class: 'download-pill',
-            title: download.title,
-            'aria-label': download.ariaLabel
-          },
-          `${download.label} · ${formatCompactPlus(download.value)}`
-        )
-      )
+      downloads.map(renderDownloadItem)
     );
   }
 
@@ -168,17 +185,7 @@
     return h(
       'div',
       { class: 'project-downloads' },
-      items.map((item) =>
-        h(
-          'span',
-          {
-            class: 'download-pill',
-            title: item.title,
-            'aria-label': item.ariaLabel
-          },
-          `${item.label} · ${formatCompactPlus(item.value)}`
-        )
-      )
+      items.map(renderDownloadItem)
     );
   }
 
@@ -228,11 +235,19 @@
     return h(
       'article',
       { class: cardClass },
-      kicker,
-      title,
-      description,
-      facts,
-      link
+      h(
+        'div',
+        { class: 'card-top' },
+        kicker,
+        title,
+        description
+      ),
+      h(
+        'div',
+        { class: 'card-bottom' },
+        facts,
+        link
+      )
     );
   }
 
@@ -361,7 +376,8 @@
             label: 'NuGet',
             value: nugetDownloads,
             title: `${nugetDownloads.toLocaleString()} total NuGet downloads`,
-            ariaLabel: `${nugetDownloads.toLocaleString()} total NuGet downloads`
+            ariaLabel: `${nugetDownloads.toLocaleString()} total NuGet downloads`,
+            href: `https://www.nuget.org/packages/${encodeURIComponent(config.packageId)}/`
           }
         : null,
       typeof releaseDownloads === 'number'
@@ -369,7 +385,8 @@
             label: 'Releases',
             value: releaseDownloads,
             title: `${releaseDownloads.toLocaleString()} GitHub release downloads`,
-            ariaLabel: `${releaseDownloads.toLocaleString()} GitHub release downloads`
+            ariaLabel: `${releaseDownloads.toLocaleString()} GitHub release downloads`,
+            href: `https://github.com/${username}/${config.repo}/releases`
           }
         : null
     ].filter(Boolean);
@@ -401,7 +418,8 @@
               label: 'Stars',
               value: repo.stargazers_count,
               title: `${repo.stargazers_count.toLocaleString()} GitHub stars`,
-              ariaLabel: `${repo.stargazers_count.toLocaleString()} GitHub stars`
+              ariaLabel: `${repo.stargazers_count.toLocaleString()} GitHub stars`,
+              href: 'https://github.com/Cysharp/ConsoleAppFramework'
             }
           : null,
         typeof nugetDownloads === 'number'
@@ -409,7 +427,8 @@
               label: 'NuGet',
               value: nugetDownloads,
               title: `${nugetDownloads.toLocaleString()} total NuGet downloads`,
-              ariaLabel: `${nugetDownloads.toLocaleString()} total NuGet downloads`
+              ariaLabel: `${nugetDownloads.toLocaleString()} total NuGet downloads`,
+              href: 'https://www.nuget.org/packages/ConsoleAppFramework/'
             }
           : null
       ].filter(Boolean);

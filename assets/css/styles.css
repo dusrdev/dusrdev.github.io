@@ -478,13 +478,17 @@ section {
   border-radius: 26px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: flex-start;
+  gap: 14px;
 }
 
 .contribution-card h3 {
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 2rem;
+}
+
+.contribution-card .text-link {
+  margin-top: auto;
 }
 
 .text-link,
@@ -578,9 +582,9 @@ section {
   min-height: 100%;
   padding: 22px;
   border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 18px;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -603,6 +607,13 @@ section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.card-top,
+.card-bottom {
+  display: grid;
+  align-content: start;
+  gap: 14px;
 }
 
 .card-side {
@@ -678,6 +689,15 @@ section {
 .download-pill {
   color: var(--muted);
   font-size: 0.9rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+a.download-pill:hover,
+a.download-pill:focus-visible {
+  color: var(--text);
+  border-color: color-mix(in oklab, var(--accent) 38%, var(--border));
+  background: color-mix(in oklab, var(--accent-soft) 40%, var(--surface-strong));
 }
 
 .error {
