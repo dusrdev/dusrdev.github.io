@@ -911,9 +911,6 @@ html[data-theme="dark"] {
     padding-top: 14px;
   }
 
-  .project-facts {
-    padding: 12px;
-  }
 }
 
 @media (max-width: 860px) {
