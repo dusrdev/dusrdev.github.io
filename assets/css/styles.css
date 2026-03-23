@@ -479,6 +479,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .contribution-card h3 {
@@ -619,6 +620,14 @@ section {
   border-radius: 18px;
   border: 1px solid var(--border);
   background: color-mix(in oklab, var(--surface-strong) 76%, transparent);
+}
+
+.contribution-facts {
+  align-self: stretch;
+}
+
+.contribution-facts:empty {
+  display: none;
 }
 
 .card-kicker {

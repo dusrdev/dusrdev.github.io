@@ -1,8 +1,10 @@
 (function() {
   const username = 'dusrdev';
+  const cacheTtlMs = 1000 * 60 * 60 * 6;
   const grid = document.getElementById('projects-grid');
   const err = document.getElementById('projects-error');
-  if (!grid) return;
+  const contributionFacts = document.getElementById('contribution-facts');
+  if (!grid && !contributionFacts) return;
 
   const curatedProjects = [
     {
@@ -10,48 +12,55 @@
       kicker: 'Featured Work',
       summary: 'Ultra-low-latency, allocation-free console rendering for C# and .NET.',
       featured: true,
-      packageId: 'PrettyConsole'
+      packageId: 'PrettyConsole',
+      hasReleaseDownloads: false
     },
     {
       repo: 'ArrowDb',
       kicker: 'Storage Engine',
       summary: 'A hyper-light, performance-oriented NoSQL database designed for .NET.',
       featured: false,
-      packageId: 'ArrowDb'
+      packageId: 'ArrowDb',
+      hasReleaseDownloads: false
     },
     {
       repo: 'Payload',
       kicker: 'Build Tooling',
       summary: 'A build-time NuGet helper for packages that need to place bundled files into a consumer repository during build.',
       featured: false,
-      packageId: 'Payload'
+      packageId: 'Payload',
+      hasReleaseDownloads: false
     },
     {
       repo: 'Seek',
       kicker: 'CLI Search',
       summary: 'A very fast filesystem search CLI written with modern C#.',
       featured: false,
-      packageId: 'Seek'
+      packageId: 'Seek',
+      hasReleaseDownloads: true
     },
     {
       repo: 'Pulse',
       kicker: 'HTTP Tooling',
       summary: 'A hyper-fast general-purpose HTTP request tester.',
-      featured: false
+      featured: false,
+      hasReleaseDownloads: true
     },
     {
       repo: 'Sharpify',
       kicker: 'Language Extensions',
       summary: 'A collection of high-performance language extensions for C#.',
       featured: false,
-      packageId: 'Sharpify'
+      packageId: 'Sharpify',
+      hasReleaseDownloads: false
     },
     {
       repo: 'Verifast',
       kicker: 'Validation',
       summary: 'A high-performance validation library for .NET.',
       featured: false,
-      packageId: 'Verifast'
+      packageId: 'Verifast',
+      hasReleaseDownloads: false
     }
   ];
 
@@ -92,12 +101,39 @@
     }
   }
 
+  function readCache(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return null;
+
+      return {
+        data: parsed.data,
+        fresh: typeof parsed.ts === 'number' && (Date.now() - parsed.ts) < cacheTtlMs
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  function writeCache(key, data) {
+    try {
+      localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+    } catch {
+      // Ignore storage failures.
+    }
+  }
+
   function renderMeta(repo) {
     const items = [
       typeof repo.stargazers_count === 'number' ? `Stars ${repo.stargazers_count}` : null,
       repo.language || null,
       repo.pushed_at ? `Updated ${formatDate(repo.pushed_at)}` : null
     ].filter(Boolean);
+
+    if (!items.length) return null;
 
     return h(
       'div',
@@ -126,12 +162,37 @@
     );
   }
 
+  function renderContributionPills(items) {
+    if (!items.length) return null;
+
+    return h(
+      'div',
+      { class: 'project-downloads' },
+      items.map((item) =>
+        h(
+          'span',
+          {
+            class: 'download-pill',
+            title: item.title,
+            'aria-label': item.ariaLabel
+          },
+          `${item.label} · ${formatCompactPlus(item.value)}`
+        )
+      )
+    );
+  }
+
   function renderFacts(repo, downloads) {
+    const meta = renderMeta(repo);
+    const downloadPills = renderDownloads(downloads);
+
+    if (!meta && !downloadPills) return null;
+
     return h(
       'div',
       { class: 'project-facts' },
-      renderMeta(repo),
-      renderDownloads(downloads)
+      meta,
+      downloadPills
     );
   }
 
@@ -175,21 +236,58 @@
     );
   }
 
-  async function fetchRepo(config) {
+  async function fetchGitHubRepo(owner, repoName) {
+    const cacheKey = `github:repo:${owner}/${repoName}`;
+    const cached = readCache(cacheKey);
+    if (cached?.fresh) return cached.data;
+
     try {
-      const response = await fetch(`https://api.github.com/repos/${username}/${config.repo}`, {
+      const response = await fetch(`https://api.github.com/repos/${owner}/${repoName}`, {
         headers: { 'Accept': 'application/vnd.github+json' }
       });
 
-      if (!response.ok) return null;
-      return response.json();
+      if (!response.ok) return cached?.data || null;
+
+      const payload = await response.json();
+      writeCache(cacheKey, payload);
+      return payload;
     } catch {
-      return null;
+      return cached?.data || null;
+    }
+  }
+
+  async function fetchRepo(config) {
+    return fetchGitHubRepo(username, config.repo);
+  }
+
+  async function fetchUserRepos(owner) {
+    const cacheKey = `github:user-repos:${owner}`;
+    const cached = readCache(cacheKey);
+    if (cached?.fresh) return cached.data;
+
+    try {
+      const response = await fetch(`https://api.github.com/users/${owner}/repos?per_page=100&sort=updated`, {
+        headers: { 'Accept': 'application/vnd.github+json' }
+      });
+      if (!response.ok) return cached?.data || null;
+
+      const payload = await response.json();
+      if (Array.isArray(payload)) {
+        writeCache(cacheKey, payload);
+        return payload;
+      }
+      return cached?.data || null;
+    } catch {
+      return cached?.data || null;
     }
   }
 
   async function fetchNugetDownloads(packageId) {
     if (!packageId) return null;
+
+    const cacheKey = `nuget:downloads:${packageId.toLowerCase()}`;
+    const cached = readCache(cacheKey);
+    if (cached?.fresh) return cached.data;
 
     const endpoints = [
       `https://azuresearch-usnc.nuget.org/query?q=packageid:${encodeURIComponent(packageId)}&prerelease=false&take=1`,
@@ -209,6 +307,7 @@
           : null;
 
         if (typeof match?.totalDownloads === 'number' && match.totalDownloads > 0) {
+          writeCache(cacheKey, match.totalDownloads);
           return match.totalDownloads;
         }
       } catch {
@@ -216,35 +315,44 @@
       }
     }
 
-    return null;
+    return cached?.data || null;
   }
 
   async function fetchReleaseDownloads(repoName) {
+    const cacheKey = `github:release-downloads:${username}/${repoName}`;
+    const cached = readCache(cacheKey);
+    if (cached?.fresh) return cached.data;
+
     try {
       const response = await fetch(`https://api.github.com/repos/${username}/${repoName}/releases?per_page=100`, {
         headers: { 'Accept': 'application/vnd.github+json' }
       });
-      if (!response.ok) return null;
+      if (!response.ok) return cached?.data || null;
 
       const releases = await response.json();
-      if (!Array.isArray(releases) || !releases.length) return null;
+      if (!Array.isArray(releases) || !releases.length) return cached?.data || null;
 
       const total = releases.reduce((releaseSum, release) => {
         const assets = Array.isArray(release.assets) ? release.assets : [];
         return releaseSum + assets.reduce((assetSum, asset) => assetSum + (asset.download_count || 0), 0);
       }, 0);
 
-      return total > 0 ? total : null;
+      if (total > 0) {
+        writeCache(cacheKey, total);
+        return total;
+      }
+
+      return cached?.data || null;
     } catch {
-      return null;
+      return cached?.data || null;
     }
   }
 
-  async function hydrateProject(config) {
+  async function hydrateProject(config, repoMap) {
     const [repo, nugetDownloads, releaseDownloads] = await Promise.all([
-      fetchRepo(config),
+      Promise.resolve(repoMap.get(config.repo) || null),
       fetchNugetDownloads(config.packageId),
-      fetchReleaseDownloads(config.repo)
+      config.hasReleaseDownloads ? fetchReleaseDownloads(config.repo) : Promise.resolve(null)
     ]);
 
     const downloads = [
@@ -278,9 +386,46 @@
     };
   }
 
+  async function loadContributionFacts() {
+    if (!contributionFacts) return;
+
+    try {
+      const [repo, nugetDownloads] = await Promise.all([
+        fetchGitHubRepo('Cysharp', 'ConsoleAppFramework'),
+        fetchNugetDownloads('ConsoleAppFramework')
+      ]);
+
+      const pills = [
+        typeof repo?.stargazers_count === 'number'
+          ? {
+              label: 'Stars',
+              value: repo.stargazers_count,
+              title: `${repo.stargazers_count.toLocaleString()} GitHub stars`,
+              ariaLabel: `${repo.stargazers_count.toLocaleString()} GitHub stars`
+            }
+          : null,
+        typeof nugetDownloads === 'number'
+          ? {
+              label: 'NuGet',
+              value: nugetDownloads,
+              title: `${nugetDownloads.toLocaleString()} total NuGet downloads`,
+              ariaLabel: `${nugetDownloads.toLocaleString()} total NuGet downloads`
+            }
+          : null
+      ].filter(Boolean);
+
+      const rendered = renderContributionPills(pills);
+      if (rendered) contributionFacts.appendChild(rendered);
+    } catch {
+      // Keep the contribution card stable if upstream APIs fail.
+    }
+  }
+
   async function loadRepos() {
     try {
-      const projects = await Promise.all(curatedProjects.map(hydrateProject));
+      const repoList = await fetchUserRepos(username);
+      const repoMap = new Map(Array.isArray(repoList) ? repoList.map((repo) => [repo.name, repo]) : []);
+      const projects = await Promise.all(curatedProjects.map((config) => hydrateProject(config, repoMap)));
       const rendered = projects.map((project, index) =>
         renderRepo(project.repo, curatedProjects[index], project.downloads)
       );
@@ -298,5 +443,6 @@
     }
   }
 
-  loadRepos();
+  if (grid) loadRepos();
+  loadContributionFacts();
 })();
