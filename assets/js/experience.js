@@ -10,16 +10,16 @@
 
   const entries = [
     {
-      role: 'Software Engineer', company: 'Elspec', dates: 'Jan 2026 - Present',
+      role: 'Software Engineer', company: 'Elspec', dates: '2026 - Present',
       summary: 'Building resilient C# systems, APIs, and kiosk tooling around hardware telemetry, binary protocols, and operational reliability.'
     },
     {
-      role: 'Software Support', company: 'Bright Data', dates: 'Aug 2024 - Jan 2025',
+      role: 'Software Support', company: 'Bright Data', dates: '2024',
       summary: 'Worked across SDK and proxy debugging, while building a cross-platform load-testing CLI for real support workflows.'
     },
     {
-      role: 'System Administrator', company: 'A.D Insurance', dates: 'May 2022 - Oct 2023',
-      summary: 'Owned automation around legacy software and handled secure VPN and authentication setups for remote operations.'
+      role: 'Full Stack Engineer (Part-Time)', company: 'A.D Insurance', dates: '2021 - 2023',
+      summary: 'Build automation and compatibility software to increase efficiency'
     }
   ];
 
