@@ -10,7 +10,7 @@
 
   const entries = [
     {
-      role: 'Software Engineer', company: 'Elspec', dates: '2026 - Present',
+      role: 'Software Engineer', company: 'Elspec', dates: '2026',
       summary: 'Building resilient C# systems, APIs, and kiosk tooling around hardware telemetry, binary protocols, and operational reliability.'
     },
     {
