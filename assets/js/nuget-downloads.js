@@ -46,10 +46,9 @@
       el.title = `${total.toLocaleString()} total downloads across all packages`;
       el.setAttribute('aria-label', `${total.toLocaleString()} total NuGet downloads`);
     } else {
-      // Graceful fallback (keep subtle)
-      el.textContent = 'NuGet · 30K+';
-      el.title = 'Approximate total downloads';
-      el.setAttribute('aria-label', 'Approximate total NuGet downloads: 30K+');
+      el.textContent = 'NuGet Profile';
+      el.title = 'View NuGet profile';
+      el.setAttribute('aria-label', 'View NuGet profile');
     }
   })();
 })();

@@ -18,8 +18,9 @@ High-level architecture (big picture)
 - index.html: Sections and wiring
   - Header: brand + nav + 3‑state theme toggle (Dark/Light/Auto with SVG icon & label) + `Resume` and `Resume-He` links that open the PDFs from `assets/resume/`
   - Hero: profile avatar, tagline, buttons (View Resume → `assets/resume/Resume.pdf`, GitHub Profile)
-  - About: short bio
-  - Experience: compact two‑line carousel with prev/next buttons; auto‑rotates and pauses on hover/focus
+  - About: engineering achievements and open-source focus, with a contribution highlight
+  - Experience: compact carousel with prev/next buttons and keyboard navigation; includes Elspec, Bright Data, and A.D. Insurance
+  - Skills: application development, testing and delivery, and platforms and AI, summarized from the resumes
   - Projects: grid filled from GitHub API in a fixed order
   - Contact: modern icon buttons (phone, email, LinkedIn, GitHub, Instagram)
   - Footer: copyright
@@ -30,9 +31,9 @@ High-level architecture (big picture)
   - Brand hover states for contact buttons; GitHub hover uses high‑contrast colors
 - assets/js
   - app.js: Loads and renders Projects from an explicit ordered list of repos for user "dusrdev"
-    - Order (as of now): Sharpify, PrettyConsole, ArrowDb, Pulse, PdfTool, PuppeteerSharpToolkit
+    - Order (as of now): PrettyConsole, ArrowDb, Payload, Seek, Pulse, Sharpify, Verifast
     - Edit the ordered array in app.js to change projects
-  - nuget-downloads.js: Fetches total downloads (owner:dusrdev) from NuGet search API and shows a compact count (e.g., "NuGet · 33.2K+"). Tooltip holds the precise number
+  - nuget-downloads.js: Fetches total downloads (owner:dusrdev) from NuGet search API and shows a compact count (e.g., "NuGet · 33.2K+"). Tooltip holds the precise number; if unavailable, shows a profile link without a download total
   - experience.js: Two‑line experience card carousel; keyboard arrows and prev/next buttons supported
   - reveal.js: IntersectionObserver to fade/slide sections into view (.reveal)
   - theme.js: 3‑state theme toggle with SVG icons (sun/moon/yin‑yang) and animated swaps; cycles Dark ↔ Light ↔ Auto (order after Auto depends on current system theme)
@@ -44,7 +45,8 @@ External links and resources
 
 Common maintenance tasks
 - Update projects shown: edit the ordered array in assets/js/app.js
-- Update resume files: drop the latest `Resume.pdf` and/or `Resume-He.pdf` into assets/resume/ (overwrite existing files); links update automatically
+- Update resume files: drop the latest `Resume.pdf` and/or `Resume-He.pdf` into assets/resume/ (overwrite existing files); links update automatically. Review the hero, About, Skills, and initial experience summary in index.html and the entries in assets/js/experience.js for wording and skills that should carry over
+- Adapt resume changes selectively for the website. Use existing project listings, contribution highlights, and live counters rather than repeating them in summaries or hardcoding download totals
 - Adjust theme toggle behavior or labels: assets/js/theme.js
 - Tweak animations (reveal/hover): assets/js/reveal.js and CSS transitions in styles.css
 

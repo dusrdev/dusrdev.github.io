@@ -11,15 +11,15 @@
   const entries = [
     {
       role: 'Software Engineer', company: 'Elspec', dates: '2026',
-      summary: 'Building resilient C# systems, APIs, and kiosk tooling around hardware telemetry, binary protocols, and operational reliability.'
+      summary: 'Reengineered Modbus communication to increase throughput by about 20x while reducing CPU usage from saturation to approximately 10%. Sole developer of an Avalonia app for embedded Linux.'
     },
     {
       role: 'Software Support', company: 'Bright Data', dates: '2024',
-      summary: 'Worked across SDK and proxy debugging, while building a cross-platform load-testing CLI for real support workflows.'
+      summary: 'Built a cross-platform load-testing CLI that cut the time to confirm reported performance issues by roughly 60%. Debugged customer SDK and proxy code to resolve high-priority issues.'
     },
     {
-      role: 'Full Stack Engineer (Part-Time)', company: 'A.D Insurance', dates: '2021 - 2023',
-      summary: 'Build automation and compatibility software to increase efficiency'
+      role: 'Full Stack Engineer (Part-Time, Sole Developer)', company: 'A.D. Insurance', dates: '2021 - 2023',
+      summary: 'Shipped a .NET MAUI app unifying 3-4 vehicle databases for insurance quotes from partial plates, plus a local WPF batch PDF app that sped up document preparation and kept sensitive data on-device.'
     }
   ];
 
