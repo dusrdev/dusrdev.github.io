@@ -52,6 +52,6 @@
     else if (e.key === 'ArrowLeft') { prev(); }
   });
 
-  // Init
+  // Init 
   render(i);
 })();
