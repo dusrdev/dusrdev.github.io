@@ -12,12 +12,12 @@ How to run locally
 
 Deploy
 - Push to default branch. GitHub Pages (Settings → Pages → Source: Deploy from a branch) serves the site.
-- Resume files live inside `assets/resume/` (drop in `Resume.pdf` and `Resume-He.pdf`). Update those files directly before deploy; no external hosting is involved anymore.
+- Resume files live inside `assets/resume/` (drop in `David_Shnayder_Software_Engineer.pdf` and `Resume-He.pdf`). Update those files directly before deploy; no external hosting is involved anymore.
 
 High-level architecture (big picture)
 - index.html: Sections and wiring
   - Header: brand + nav + 3‑state theme toggle (Dark/Light/Auto with SVG icon & label) + `Resume` and `Resume-He` links that open the PDFs from `assets/resume/`
-  - Hero: profile avatar, tagline, buttons (View Resume → `assets/resume/Resume.pdf`, GitHub Profile)
+  - Hero: profile avatar, tagline, buttons (View Resume → `assets/resume/David_Shnayder_Software_Engineer.pdf`, GitHub Profile)
   - About: engineering achievements and open-source focus, with a contribution highlight
   - Experience: compact carousel with prev/next buttons and keyboard navigation; includes Elspec, Bright Data, and A.D. Insurance
   - Skills: application development, testing and delivery, and platforms and AI, summarized from the resumes
@@ -38,14 +38,14 @@ High-level architecture (big picture)
   - reveal.js: IntersectionObserver to fade/slide sections into view (.reveal)
   - theme.js: 3‑state theme toggle with SVG icons (sun/moon/yin‑yang) and animated swaps; cycles Dark ↔ Light ↔ Auto (order after Auto depends on current system theme)
 - assets/images/profile.png: Hero avatar
-- assets/resume/: Directory that stores `Resume.pdf` (default) and `Resume-He.pdf` (alternate language). Keep a placeholder file (e.g., `.gitkeep`) if the PDFs are not committed.
+- assets/resume/: Directory that stores `David_Shnayder_Software_Engineer.pdf` (default) and `Resume-He.pdf` (alternate language). Keep a placeholder file (e.g., `.gitkeep`) if the PDFs are not committed.
 
 External links and resources
 - GitHub profile: https://github.com/dusrdev
 
 Common maintenance tasks
 - Update projects shown: edit the ordered array in assets/js/app.js
-- Update resume files: drop the latest `Resume.pdf` and/or `Resume-He.pdf` into assets/resume/ (overwrite existing files); links update automatically. Review the hero, About, Skills, and initial experience summary in index.html and the entries in assets/js/experience.js for wording and skills that should carry over
+- Update resume files: drop the latest `David_Shnayder_Software_Engineer.pdf` and/or `Resume-He.pdf` into assets/resume/ (overwrite existing files); links update automatically. Review the hero, About, Skills, and initial experience summary in index.html and the entries in assets/js/experience.js for wording and skills that should carry over
 - Adapt resume changes selectively for the website. Use existing project listings, contribution highlights, and live counters rather than repeating them in summaries or hardcoding download totals
 - Adjust theme toggle behavior or labels: assets/js/theme.js
 - Tweak animations (reveal/hover): assets/js/reveal.js and CSS transitions in styles.css
